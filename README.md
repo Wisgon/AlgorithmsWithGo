@@ -1,7 +1,7 @@
-# AlgorithmsWithGo
+# AlgorithmsWihtGo
 
 #### Description
-用go语言实现算法导论中的各种算法
+Algorithms implement by golang
 
 #### Software Architecture
 Software architecture description
