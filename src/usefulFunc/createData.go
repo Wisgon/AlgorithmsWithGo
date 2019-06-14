@@ -32,3 +32,20 @@ func CreateRandSlice(amount int, biggestNum int, ifNegitive bool) []int {
 	}
 	return s
 }
+
+func CreateMatrix(row int, column int, minNum int, maxNum int) [][]int {
+	//math.MaxInt8可获得8位整数的最大值
+	if minNum >= maxNum {
+		panic("minNum must little than maxNum!")
+	}
+	var newMatrix [][]int
+	newMatrix = make([][]int, row)
+	rand.Seed(time.Now().Unix())
+	for i := 0; i < row; i++ {
+		newMatrix[i] = make([]int, column)
+		for j := 0; j < column; j++ {
+			newMatrix[i][j] = rand.Intn(maxNum-minNum) + minNum
+		}
+	}
+	return newMatrix
+}

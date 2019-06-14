@@ -1,4 +1,4 @@
-package maximumSubarray
+package chater4_1_maximumSubarray
 
 import (
 	"math"

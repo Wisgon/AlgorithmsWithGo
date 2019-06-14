@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//传入channal的指针才能改变channal的cap
 	//var r chan int
@@ -31,6 +33,16 @@ func main() {
 	//wg.Wait()
 	//fmt.Println("done")
 
+	//生成一定范围内的随机数
+	//rand.Seed(time.Now().UnixNano())
+	//for i:=0; i<20; i++ {
+	//	fmt.Println(rand.Intn(10+10)-10)
+	//}
+
+	//fmt.Println(usefulFunc.CreateMatrix(5,6, math.MaxInt8, math.MinInt8))
+
+	var a [2][3]int
+	fmt.Println(len(a[0]))
 }
 
 //func testWait(wg sync.WaitGroup, a int) {
