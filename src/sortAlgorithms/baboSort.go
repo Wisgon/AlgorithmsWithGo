@@ -1,4 +1,4 @@
-package sortAlg
+package sortAlgorithms
 
 func BaboSort(sli []int) {
 	numOfSlice := len(sli)
