@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	data := usefulFunc.CreateRandSlicePositive(49801245)
+	data := usefulFunc.CreateRandSlicePositive(500000000)
 	copyData := make([]int, len(data)) //用来存放生成的数组，相同的数组才有比较的意义
 	ts := time.Now()
 
@@ -46,7 +46,7 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	//控制住多个线程的归并排序，chunkNum设置太多会发生内存爆炸
-	go sortAlgorithms.MergeSortMultitwo(copyData, 0, len(copyData)-1, &wg, 8) //同一个机器十万个排序花了十三毫秒
+	go sortAlgorithms.MergeSortMultitwo(copyData, 0, len(copyData)-1, &wg, 4) //同一个机器十万个排序花了十三毫秒
 	wg.Wait()
 	fmt.Println("time five is", time.Since(ts))
 	//usefulFunc.ShowSlice(copyData)
