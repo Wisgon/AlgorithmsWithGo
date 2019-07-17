@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
 	//传入channal的指针才能改变channal的cap
 	//var r chan int
@@ -41,9 +39,24 @@ func main() {
 
 	//fmt.Println(usefulFunc.CreateMatrix(5,6, math.MaxInt8, math.MinInt8))
 
-	var a [2][3]int
-	fmt.Println(len(a[0]))
+	//事实证明是不能多重通道赋值的
+	//a, b:=make(chan int), make(chan int)
+	//a<- , b<- =  TwoChan() //报错
+	//a, b <- TwoChan() //报错
+
+	//可以直接chan出来做运算
+	//a := make(chan int)
+	//b := make(chan int)
+	//go func(a chan int, b chan int) {
+	//	a <- 3
+	//	b <- 4
+	//}(a, b)
+	//fmt.Println(<-a < <-b)
 }
+
+//func TwoChan()(int, int) {
+//	return 2,3
+//}
 
 //func testWait(wg sync.WaitGroup, a int) {
 //	var wg2 sync.WaitGroup

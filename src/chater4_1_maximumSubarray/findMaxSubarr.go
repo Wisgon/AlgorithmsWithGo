@@ -1,6 +1,7 @@
 package chater4_1_maximumSubarray
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -24,10 +25,62 @@ func FindMaxSubarray(sli []int, leftIdx int, rightIdx int) (maxLeftIdx int, maxR
 	}
 }
 
+//ToDO：设计可控制开几个线程的版本
+func FindMaxSubarrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan chan int, maxRightIdxResChan chan int, maxSumResChan chan int, recursionNum int, setRecursionNum int) {
+	midIdx := int((rightIdx + leftIdx) / 2)
+	bts := binaryTreeSum(recursionNum) // 注意这里为什么是计算二叉树的值
+	fmt.Printf("bts is %d", bts)
+	recursionNum += 1
+	if bts <= setRecursionNum {
+		fmt.Printf("going recursion %d", recursionNum)
+		leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan :=
+			make(chan int), make(chan int), make(chan int), make(chan int), make(chan int), make(chan int)
+
+		go FindMaxSubarrayCon(sli, leftIdx, midIdx, leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, recursionNum, setRecursionNum)
+		go FindMaxSubarrayCon(sli, midIdx+1, rightIdx, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan, recursionNum, setRecursionNum)
+
+		crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarray(sli, leftIdx, rightIdx, midIdx)
+		//crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarrayCon(sli, leftIdx, rightIdx, midIdx)
+		leftMaxLeftIdx, leftMaxRightIdx, leftMaxSum, rightMaxLeftIdx, rightMaxRightIdx, rightMaxSum :=
+			<-leftMaxLeftIdxChan, <-leftMaxRightIdxChan, <-leftMaxSumChan, <-rightMaxLeftIdxChan, <-rightMaxRightIdxChan, <-rightMaxSumChan
+
+		if leftMaxSum >= rightMaxSum && leftMaxSum >= crossMaxSum {
+			maxLeftIdxResChan <- leftMaxLeftIdx
+			maxRightIdxResChan <- leftMaxRightIdx
+			maxSumResChan <- leftMaxSum
+		} else if rightMaxSum >= leftMaxSum && rightMaxSum >= crossMaxSum {
+			maxLeftIdxResChan <- rightMaxLeftIdx
+			maxRightIdxResChan <- rightMaxRightIdx
+			maxSumResChan <- rightMaxSum
+		} else {
+			maxLeftIdxResChan <- crossMaxLeftIdx
+			maxRightIdxResChan <- crossMaxRightIdx
+			maxSumResChan <- crossMaxSum
+		}
+	} else {
+		leftMaxLeftIdx, leftMaxRightIdx, leftMaxSum := FindMaxSubarray(sli, leftIdx, midIdx)
+		rightMaxLeftIdx, rightMaxRightIdx, rightMaxSum := FindMaxSubarray(sli, midIdx+1, rightIdx)
+		crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarray(sli, leftIdx, rightIdx, midIdx)
+		//crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarrayCon(sli, leftIdx, rightIdx, midIdx)
+		if leftMaxSum >= rightMaxSum && leftMaxSum >= crossMaxSum {
+			maxLeftIdxResChan <- leftMaxLeftIdx
+			maxRightIdxResChan <- leftMaxRightIdx
+			maxSumResChan <- leftMaxSum
+		} else if rightMaxSum >= leftMaxSum && rightMaxSum >= crossMaxSum {
+			maxLeftIdxResChan <- rightMaxLeftIdx
+			maxRightIdxResChan <- rightMaxRightIdx
+			maxSumResChan <- rightMaxSum
+		} else {
+			maxLeftIdxResChan <- crossMaxLeftIdx
+			maxRightIdxResChan <- crossMaxRightIdx
+			maxSumResChan <- crossMaxSum
+		}
+	}
+}
+
 func findMaxCrossingSubarrayCon(sli []int, leftIdx int, rightIdx int, midIdx int) (maxLeftIdx int, maxRightIdx int, maxSum int) {
 
 	//实验证明， 用这个多线程版本会更慢，因为递归创造了太多的goroutine
-	//ToDO：设计最多只开8个线程的版本
 
 	maxLeftIdxChan, maxRightIdxChan, maxLeftSumChan, maxRightSumChan := make(chan int), make(chan int), make(chan int), make(chan int)
 
@@ -91,4 +144,12 @@ func findMaxCrossingSubarray(sli []int, leftIdx int, rightIdx int, midIdx int) (
 
 	return maxLeftIdx, maxRightIdx, leftSum + rightSum
 
+}
+
+func binaryTreeSum(a int) int {
+	sum := 1.0
+	for i := 1; i < a; i++ {
+		sum += math.Pow(2, float64(i))
+	}
+	return int(sum)
 }
