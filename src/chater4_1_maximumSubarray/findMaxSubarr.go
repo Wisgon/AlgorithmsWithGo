@@ -26,18 +26,22 @@ func FindMaxSubarray(sli []int, leftIdx int, rightIdx int) (maxLeftIdx int, maxR
 }
 
 //ToDO：设计可控制开几个线程的版本
-func FindMaxSubarrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan chan int, maxRightIdxResChan chan int, maxSumResChan chan int, recursionNum int, setRecursionNum int) {
+func FindMaxSubArrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan chan int, maxRightIdxResChan chan int, maxSumResChan chan int, recursionNum int, setRecursionNum int) {
+	if len(sli) < 2*setRecursionNum {
+		//数组太少会导致无限递归
+		panic("too small sli!")
+	}
 	midIdx := int((rightIdx + leftIdx) / 2)
 	bts := binaryTreeSum(recursionNum) // 注意这里为什么是计算二叉树的值
-	fmt.Printf("bts is %d", bts)
+	fmt.Printf("bts is %d\n", bts)
 	recursionNum += 1
-	if bts <= setRecursionNum {
-		fmt.Printf("going recursion %d", recursionNum)
+	if bts < setRecursionNum {
+		fmt.Printf("going recursion %d\n", recursionNum)
 		leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan :=
 			make(chan int), make(chan int), make(chan int), make(chan int), make(chan int), make(chan int)
 
-		go FindMaxSubarrayCon(sli, leftIdx, midIdx, leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, recursionNum, setRecursionNum)
-		go FindMaxSubarrayCon(sli, midIdx+1, rightIdx, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan, recursionNum, setRecursionNum)
+		go FindMaxSubArrayCon(sli, leftIdx, midIdx, leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, recursionNum, setRecursionNum)
+		go FindMaxSubArrayCon(sli, midIdx+1, rightIdx, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan, recursionNum, setRecursionNum)
 
 		crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarray(sli, leftIdx, rightIdx, midIdx)
 		//crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarrayCon(sli, leftIdx, rightIdx, midIdx)
@@ -58,6 +62,7 @@ func FindMaxSubarrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan 
 			maxSumResChan <- crossMaxSum
 		}
 	} else {
+		fmt.Println("caculating~~~%d, %d, %d", leftIdx, midIdx, rightIdx)
 		leftMaxLeftIdx, leftMaxRightIdx, leftMaxSum := FindMaxSubarray(sli, leftIdx, midIdx)
 		rightMaxLeftIdx, rightMaxRightIdx, rightMaxSum := FindMaxSubarray(sli, midIdx+1, rightIdx)
 		crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarray(sli, leftIdx, rightIdx, midIdx)
