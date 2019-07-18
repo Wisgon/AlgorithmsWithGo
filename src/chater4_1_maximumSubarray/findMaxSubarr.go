@@ -1,7 +1,6 @@
 package chater4_1_maximumSubarray
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -25,20 +24,21 @@ func FindMaxSubarray(sli []int, leftIdx int, rightIdx int) (maxLeftIdx int, maxR
 	}
 }
 
-//ToDO：设计可控制开几个线程的版本
 func FindMaxSubArrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan chan int, maxRightIdxResChan chan int, maxSumResChan chan int, recursionNum int, setRecursionNum int) {
 	if len(sli) < 2*setRecursionNum {
 		//数组太少会导致无限递归
 		panic("too small sli!")
 	}
+	if !(setRecursionNum == 2 || setRecursionNum == 4 || setRecursionNum == 8 || setRecursionNum == 16) {
+		panic("setRecursionNum error")
+	}
 	midIdx := int((rightIdx + leftIdx) / 2)
-	bts := binaryTreeSum(recursionNum) // 注意这里为什么是计算二叉树的值
-	fmt.Printf("bts is %d\n", bts)
+	bt := binaryTree(recursionNum) // 注意这里为什么是计算二叉树的值
 	recursionNum += 1
-	if bts < setRecursionNum {
-		fmt.Printf("going recursion %d\n", recursionNum)
+	if bt < setRecursionNum {
+		//注意这里的是有缓冲通道，如果是无缓冲通道，会发生阻塞
 		leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan :=
-			make(chan int), make(chan int), make(chan int), make(chan int), make(chan int), make(chan int)
+			make(chan int, 1), make(chan int, 1), make(chan int, 1), make(chan int, 1), make(chan int, 1), make(chan int, 1)
 
 		go FindMaxSubArrayCon(sli, leftIdx, midIdx, leftMaxLeftIdxChan, leftMaxRightIdxChan, leftMaxSumChan, recursionNum, setRecursionNum)
 		go FindMaxSubArrayCon(sli, midIdx+1, rightIdx, rightMaxLeftIdxChan, rightMaxRightIdxChan, rightMaxSumChan, recursionNum, setRecursionNum)
@@ -47,7 +47,6 @@ func FindMaxSubArrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan 
 		//crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarrayCon(sli, leftIdx, rightIdx, midIdx)
 		leftMaxLeftIdx, leftMaxRightIdx, leftMaxSum, rightMaxLeftIdx, rightMaxRightIdx, rightMaxSum :=
 			<-leftMaxLeftIdxChan, <-leftMaxRightIdxChan, <-leftMaxSumChan, <-rightMaxLeftIdxChan, <-rightMaxRightIdxChan, <-rightMaxSumChan
-
 		if leftMaxSum >= rightMaxSum && leftMaxSum >= crossMaxSum {
 			maxLeftIdxResChan <- leftMaxLeftIdx
 			maxRightIdxResChan <- leftMaxRightIdx
@@ -62,10 +61,10 @@ func FindMaxSubArrayCon(sli []int, leftIdx int, rightIdx int, maxLeftIdxResChan 
 			maxSumResChan <- crossMaxSum
 		}
 	} else {
-		fmt.Println("caculating~~~%d, %d, %d", leftIdx, midIdx, rightIdx)
 		leftMaxLeftIdx, leftMaxRightIdx, leftMaxSum := FindMaxSubarray(sli, leftIdx, midIdx)
 		rightMaxLeftIdx, rightMaxRightIdx, rightMaxSum := FindMaxSubarray(sli, midIdx+1, rightIdx)
 		crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarray(sli, leftIdx, rightIdx, midIdx)
+
 		//crossMaxLeftIdx, crossMaxRightIdx, crossMaxSum := findMaxCrossingSubarrayCon(sli, leftIdx, rightIdx, midIdx)
 		if leftMaxSum >= rightMaxSum && leftMaxSum >= crossMaxSum {
 			maxLeftIdxResChan <- leftMaxLeftIdx
@@ -151,10 +150,6 @@ func findMaxCrossingSubarray(sli []int, leftIdx int, rightIdx int, midIdx int) (
 
 }
 
-func binaryTreeSum(a int) int {
-	sum := 1.0
-	for i := 1; i < a; i++ {
-		sum += math.Pow(2, float64(i))
-	}
-	return int(sum)
+func binaryTree(a int) int {
+	return int(math.Pow(2, float64(a-1)))
 }
