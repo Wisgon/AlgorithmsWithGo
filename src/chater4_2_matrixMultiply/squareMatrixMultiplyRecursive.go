@@ -12,6 +12,19 @@ func SquareMatrixMultiplyRecursive(matA [][]int, matB [][]int) [][]int {
 	matC := make([][]int, n1)
 	if n1 == 1 {
 		matC[0][0] = matA[0][0] * matB[0][0]
+	} else {
+
 	}
 
+}
+
+func MatrixPlus(matA [][]int, matB [][]int) [][]int {
+	matC := make([][]int, len(matA))
+	for i := 0; i < len(matA); i++ {
+		matC[i] = make([]int, len(matA[i]))
+		for j := 0; j < len(matA[i]); j++ {
+			matC[i][j] = matA[i][j] + matB[i][j]
+		}
+	}
+	return matC
 }
