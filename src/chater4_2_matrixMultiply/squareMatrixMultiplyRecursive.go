@@ -10,6 +10,9 @@ func SquareMatrixMultiplyRecursive(matA [][]int, matB [][]int) [][]int {
 		panic("Matrix must be n x n and n must be pow of 2")
 	}
 	matC := make([][]int, n1)
+	for i := 0; i < len(matC); i++ {
+		matC[i] = make([]int, n1)
+	}
 	if n1 == 1 {
 		matC[0][0] = matA[0][0] * matB[0][0]
 	} else {

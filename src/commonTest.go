@@ -52,7 +52,6 @@ func main() {
 	//	b <- 4
 	//}(a, b)
 	//fmt.Println(<-a < <-b)
-
 }
 
 //func TwoChan()(int, int) {
