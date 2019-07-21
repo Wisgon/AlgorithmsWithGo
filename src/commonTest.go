@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//传入channal的指针才能改变channal的cap
 	//var r chan int
@@ -52,7 +54,22 @@ func main() {
 	//	b <- 4
 	//}(a, b)
 	//fmt.Println(<-a < <-b)
+
+	// 说明切片传进去的是引用地址，没有发生值复制
+	//a := make([][]int, 3)
+	//a[0] = make([]int,1)
+	//a[0][0]=1
+	//fmt.Println(&a[0][0])
+	//b(a)
+
+	c := make([][]int, 3)
+	c[0] = append(c[0], 3)
+	fmt.Println(c)
 }
+
+//func b(a [][]int){
+//	fmt.Println(&a[0][0])
+//}
 
 //func TwoChan()(int, int) {
 //	return 2,3

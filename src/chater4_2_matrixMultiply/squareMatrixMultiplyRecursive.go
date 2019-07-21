@@ -9,14 +9,26 @@ func SquareMatrixMultiplyRecursive(matA [][]int, matB [][]int) [][]int {
 	if !(uf.IsPowOfTwo(n1) || uf.IsPowOfTwo(n2) || uf.IsPowOfTwo(n3) || uf.IsPowOfTwo(n4)) || n1 != n2 || n2 != n3 || n3 != n4 {
 		panic("Matrix must be n x n and n must be pow of 2")
 	}
-	matC := make([][]int, n1)
-	for i := 0; i < len(matC); i++ {
-		matC[i] = make([]int, n1)
-	}
 	if n1 == 1 {
-		matC[0][0] = matA[0][0] * matB[0][0]
+		return [][]int{{matA[0][0] * matB[0][0]}}
 	} else {
-
+		C11 := MatrixPlus(
+			SquareMatrixMultiplyRecursive(matA[:n1/2][:n1/2], matB[:n1/2][:n1/2]),
+			SquareMatrixMultiplyRecursive(matA[:n1/2][n1/2:], matB[n1/2:][:n1/2]),
+		)
+		C12 := MatrixPlus(
+			SquareMatrixMultiplyRecursive(matA[:n1/2][:n1/2], matB[:n1/2][n1/2:]),
+			SquareMatrixMultiplyRecursive(matA[:n1/2][n1/2:], matB[n1/2:][n1/2:]),
+		)
+		C13 := MatrixPlus(
+			SquareMatrixMultiplyRecursive(matA[n1/2:][:n1/2], matB[:n1/2][n1/2:]),
+			SquareMatrixMultiplyRecursive(matA[n1/2:][n1/2:], matB[n1/2:][n1/2:]),
+		)
+		C14 := MatrixPlus(
+			SquareMatrixMultiplyRecursive(matA[n1/2:][:n1/2], matB[:n1/2][n1/2:]),
+			SquareMatrixMultiplyRecursive(matA[n1/2:][n1/2:], matB[n1/2:][n1/2:]),
+		)
+		return CombineMatrix(C11, C12, C13, C14)
 	}
 
 }
@@ -30,4 +42,16 @@ func MatrixPlus(matA [][]int, matB [][]int) [][]int {
 		}
 	}
 	return matC
+}
+
+func CombineMatrix(matA [][]int, matB [][]int, matC [][]int, matD [][]int) [][]int {
+	n := len(matA)
+	var mat [][]int
+	for i := 0; i < n; i++ {
+		mat = append(mat, append(matA[i], matB[i]...))
+	}
+	for j := 0; j < n; j++ {
+		mat = append(mat, append(matC[j], matD[j]...))
+	}
+	return mat
 }
