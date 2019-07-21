@@ -7,33 +7,75 @@ import (
 func SquareMatrixMultiplyRecursive(matA [][]int, matB [][]int) [][]int {
 	n1, n2, n3, n4 := len(matA), len(matA[0]), len(matB), len(matB[0])
 	if !(uf.IsPowOfTwo(n1) || uf.IsPowOfTwo(n2) || uf.IsPowOfTwo(n3) || uf.IsPowOfTwo(n4)) || n1 != n2 || n2 != n3 || n3 != n4 {
-		panic("Matrix must be n x n and n must be pow of 2")
+		panic("Matrix must both be n x n matrix and n must be pow of 2")
 	}
 	if n1 == 1 {
 		return [][]int{{matA[0][0] * matB[0][0]}}
 	} else {
+		//C11 := MatrixPlus(
+		//	SquareMatrixMultiplyRecursive(matA[:n1/2][:n1/2], matB[:n1/2][:n1/2]),
+		//	SquareMatrixMultiplyRecursive(matA[:n1/2][n1/2:], matB[n1/2:][:n1/2]),
+		//)
+		//C12 := MatrixPlus(
+		//	SquareMatrixMultiplyRecursive(matA[:n1/2][:n1/2], matB[:n1/2][n1/2:]),
+		//	SquareMatrixMultiplyRecursive(matA[:n1/2][n1/2:], matB[n1/2:][n1/2:]),
+		//)
+		//C13 := MatrixPlus(
+		//	SquareMatrixMultiplyRecursive(matA[n1/2:][:n1/2], matB[:n1/2][:n1/2]),
+		//	SquareMatrixMultiplyRecursive(matA[n1/2:][n1/2:], matB[n1/2:][:n1/2]),
+		//)
+		//C14 := MatrixPlus(
+		//	SquareMatrixMultiplyRecursive(matA[n1/2:][:n1/2], matB[:n1/2][n1/2:]),
+		//	SquareMatrixMultiplyRecursive(matA[n1/2:][n1/2:], matB[n1/2:][n1/2:]),
+		//)
 		C11 := MatrixPlus(
-			SquareMatrixMultiplyRecursive(matA[:n1/2][:n1/2], matB[:n1/2][:n1/2]),
-			SquareMatrixMultiplyRecursive(matA[:n1/2][n1/2:], matB[n1/2:][:n1/2]),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, 0, n1/2, 0, n1/2),
+				uf.CutMatrix(matB, 0, n1/2, 0, n1/2),
+			),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, 0, n1/2, n1/2, n1),
+				uf.CutMatrix(matB, n1/2, n1, 0, n1/2),
+			),
 		)
 		C12 := MatrixPlus(
-			SquareMatrixMultiplyRecursive(matA[:n1/2][:n1/2], matB[:n1/2][n1/2:]),
-			SquareMatrixMultiplyRecursive(matA[:n1/2][n1/2:], matB[n1/2:][n1/2:]),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, 0, n1/2, 0, n1/2),
+				uf.CutMatrix(matB, 0, n1/2, n1/2, n1),
+			),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, 0, n1/2, n1/2, n1),
+				uf.CutMatrix(matB, n1/2, n1, n1/2, n1),
+			),
 		)
 		C13 := MatrixPlus(
-			SquareMatrixMultiplyRecursive(matA[n1/2:][:n1/2], matB[:n1/2][n1/2:]),
-			SquareMatrixMultiplyRecursive(matA[n1/2:][n1/2:], matB[n1/2:][n1/2:]),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, n1/2, n1, 0, n1/2),
+				uf.CutMatrix(matB, 0, n1/2, 0, n1/2),
+			),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, n1/2, n1, n1/2, n1),
+				uf.CutMatrix(matB, n1/2, n1, 0, n1/2),
+			),
 		)
 		C14 := MatrixPlus(
-			SquareMatrixMultiplyRecursive(matA[n1/2:][:n1/2], matB[:n1/2][n1/2:]),
-			SquareMatrixMultiplyRecursive(matA[n1/2:][n1/2:], matB[n1/2:][n1/2:]),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, n1/2, n1, 0, n1/2),
+				uf.CutMatrix(matB, 0, n1/2, n1/2, n1),
+			),
+			SquareMatrixMultiplyRecursive(
+				uf.CutMatrix(matA, n1/2, n1, n1/2, n1),
+				uf.CutMatrix(matB, n1/2, n1, n1/2, n1),
+			),
 		)
+
 		return CombineMatrix(C11, C12, C13, C14)
 	}
 
 }
 
 func MatrixPlus(matA [][]int, matB [][]int) [][]int {
+	//两个矩阵对应元素相加的操作
 	matC := make([][]int, len(matA))
 	for i := 0; i < len(matA); i++ {
 		matC[i] = make([]int, len(matA[i]))
@@ -45,6 +87,7 @@ func MatrixPlus(matA [][]int, matB [][]int) [][]int {
 }
 
 func CombineMatrix(matA [][]int, matB [][]int, matC [][]int, matD [][]int) [][]int {
+	//将4个nxn矩阵组成一个大的2nx2n的矩阵
 	n := len(matA)
 	var mat [][]int
 	for i := 0; i < n; i++ {

@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	//传入channal的指针才能改变channal的cap
@@ -62,9 +64,9 @@ func main() {
 	//fmt.Println(&a[0][0])
 	//b(a)
 
-	c := make([][]int, 3)
-	c[0] = append(c[0], 3)
-	fmt.Println(c)
+	a := [][]int{{1, 2, 3}, {4, 5, 6}}
+	b := a[0]
+	fmt.Println(b[:1])
 }
 
 //func b(a [][]int){
