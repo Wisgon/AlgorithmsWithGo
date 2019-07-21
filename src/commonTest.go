@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"unsafe"
 )
 
 func main() {
@@ -64,9 +65,9 @@ func main() {
 	//fmt.Println(&a[0][0])
 	//b(a)
 
-	a := [][]int{{1, 2, 3}, {4, 5, 6}}
-	b := a[0]
-	fmt.Println(b[:1])
+	var a [3]*int
+	fmt.Println(unsafe.Sizeof(a))
+
 }
 
 //func b(a [][]int){

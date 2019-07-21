@@ -31,12 +31,15 @@ func IsPowOfTwo(a int) bool {
 }
 
 func CutMatrix(mat [][]int, rowMin int, rowMax int, colMin int, colMax int) [][]int {
-	var newMatrix [][]int
-	var TheRow []int
+	//这个函数是将矩阵mat的rowMin行到rowMax行，colMin列到colMax列的元素抽出来
+	newMatrix := make([][]int, rowMax-rowMin)
 	matSliceRow := mat[rowMin:rowMax]
 	for i := 0; i < rowMax-rowMin; i++ {
-		TheRow = matSliceRow[i]
-		newMatrix = append(newMatrix, TheRow[colMin:colMax])
+		newMatrix[i] = make([]int, colMax-colMin)
+		theRow := matSliceRow[i][colMin:colMax]
+		for j := 0; j < colMax-colMin; j++ {
+			newMatrix[i][j] = theRow[j]
+		}
 	}
 	return newMatrix
 }
