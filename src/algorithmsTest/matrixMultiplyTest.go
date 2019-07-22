@@ -18,7 +18,15 @@ func main() {
 	matC := chater4_2_matrixMultiply.SquareMatrixMultiply(matA, matB)
 	fmt.Println(matC[3][3], time.Since(ts))
 	ts2 := time.Now()
-	matC2 := chater4_2_matrixMultiply.SquareMatrixMultiplyRecursive(matA, matB)
-	fmt.Println(matC2[3][3], time.Since(ts2))
+	matAp, matBp := make([][]*int, len(matA)), make([][]*int, len(matB))
+	for i := 0; i < len(matA); i++ {
+		matAp[i], matBp[i] = make([]*int, len(matA[i])), make([]*int, len(matB[i]))
+		for j := 0; j < len(matA[i]); j++ {
+			matAp[i][j] = &matA[i][j]
+			matBp[i][j] = &matB[i][j]
+		}
+	}
+	matC2 := chater4_2_matrixMultiply.SquareMatrixMultiplyRecursive(matAp, matBp)
+	fmt.Println(*matC2[3][3], time.Since(ts2))
 
 }
