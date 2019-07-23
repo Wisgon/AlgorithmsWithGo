@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"unsafe"
-)
-
 func main() {
 	//传入channal的指针才能改变channal的cap
 	//var r chan int
@@ -65,8 +60,9 @@ func main() {
 	//fmt.Println(&a[0][0])
 	//b(a)
 
-	var a [3]*int
-	fmt.Println(unsafe.Sizeof(a))
+	// 如果是直接fmt.Println(int(5.8/2.0))就会报错
+	//var a = 5.8/2.0
+	//fmt.Println(int(a))
 
 }
 
