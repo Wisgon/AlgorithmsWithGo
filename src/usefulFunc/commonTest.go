@@ -1,6 +1,6 @@
-package main
+package usefulFunc
 
-func main() {
+func CommonTest() {
 	//传入channal的指针才能改变channal的cap
 	//var r chan int
 	//fmt.Printf("len:%d,cap:%d", len(r), cap(r))

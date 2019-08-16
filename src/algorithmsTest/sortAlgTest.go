@@ -1,4 +1,4 @@
-package main
+package algorithmsTest
 
 import (
 	"fmt"
@@ -8,11 +8,10 @@ import (
 	"usefulFunc"
 )
 
-func main() {
-	data := usefulFunc.CreateRandSlicePositive(500000000)
+func SortAlgTest() {
+	data := usefulFunc.CreateRandSlicePositive(50000)
 	copyData := make([]int, len(data)) //用来存放生成的数组，相同的数组才有比较的意义
 	ts := time.Now()
-
 	//copy(copyData, data)
 	//ts = time.Now()
 	//sortAlgorithms.BaboSort(copyData) //同一个机器十万个排序花了15秒

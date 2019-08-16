@@ -1,4 +1,4 @@
-package main
+package algorithmsTest
 
 import (
 	"chater4_2_matrixMultiply"
@@ -8,7 +8,7 @@ import (
 	"usefulFunc"
 )
 
-func main() {
+func MatrixMultiplyTest() {
 	//normalAlgorithms
 	matA := usefulFunc.CreateMatrix(1123, 1144, math.MinInt8, math.MaxInt8)
 	matB := usefulFunc.CreateMatrix(1144, 1166, math.MinInt8, math.MaxInt8)

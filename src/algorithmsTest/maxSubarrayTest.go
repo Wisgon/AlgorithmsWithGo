@@ -1,4 +1,4 @@
-package main
+package algorithmsTest
 
 import (
 	"chater4_1_maximumSubarray"
@@ -10,7 +10,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func MaxSubarrayTest() {
 	//经测试，开八线程的话，在元素数量达到333333335的情况下，多线程版本大概快3倍多
 	sli := usefulFunc.CreateRandSlice(333333335, math.MaxInt32, true)
 	//sli := []int{-1, -3, -30, 12, -3, 5, 6, 8, -9, -21, -3, 2, 6, -4, 4, 4, -5, 6, 76,
