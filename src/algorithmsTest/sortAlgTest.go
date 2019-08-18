@@ -2,10 +2,10 @@ package algorithmsTest
 
 import (
 	"fmt"
-	"sortAlgorithms"
+	"gitee.com/wisgon/AlgorithmsWithGo/src/sortAlgorithms"
 	"sync"
 	"time"
-	"usefulFunc"
+	"gitee.com/wisgon/AlgorithmsWithGo/src/usefulFunc"
 )
 
 func SortAlgTest() {
