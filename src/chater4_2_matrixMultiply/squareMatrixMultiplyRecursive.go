@@ -1,7 +1,7 @@
 package chater4_2_matrixMultiply
 
 import (
-	uf "gitee.com/wisgon/AlgorithmsWithGo/src/usefulFunc"
+	uf "usefulFunc"
 )
 
 func SquareMatrixMultiplyRecursive(matA [][]*int, matB [][]*int) [][]*int {

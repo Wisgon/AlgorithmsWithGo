@@ -1,7 +1,7 @@
 package chater4_2_matrixMultiply
 
 import (
-	"gitee.com/wisgon/AlgorithmsWithGo/src/usefulFunc"
+	"usefulFunc"
 )
 
 func SquareMatrixMultiply(matA [][]int, matB [][]int) [][]int {

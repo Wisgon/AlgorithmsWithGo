@@ -2,14 +2,14 @@ package algorithmsTest
 
 import (
 	"fmt"
-	"gitee.com/wisgon/AlgorithmsWithGo/src/sortAlgorithms"
+	"sortAlgorithms"
 	"sync"
 	"time"
-	"gitee.com/wisgon/AlgorithmsWithGo/src/usefulFunc"
+	"usefulFunc"
 )
 
 func SortAlgTest() {
-	data := usefulFunc.CreateRandSlicePositive(50000)
+	data := usefulFunc.CreateRandSlicePositive(100000)
 	copyData := make([]int, len(data)) //用来存放生成的数组，相同的数组才有比较的意义
 	ts := time.Now()
 	//copy(copyData, data)

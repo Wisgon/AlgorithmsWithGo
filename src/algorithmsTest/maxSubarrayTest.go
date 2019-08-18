@@ -1,10 +1,10 @@
 package algorithmsTest
 
 import (
-	"gitee.com/wisgon/AlgorithmsWithGo/src/chater4_1_maximumSubarray"
+	"chater4_1_maximumSubarray"
 	"math"
 	"time"
-	"gitee.com/wisgon/AlgorithmsWithGo/src/usefulFunc"
+	"usefulFunc"
 
 	//"../usefulFunc"
 	"fmt"
