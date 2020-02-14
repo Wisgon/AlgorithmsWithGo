@@ -8,5 +8,3 @@ import (
 func main() {
 	algorithmsTest.SortAlgTest()
 }
-
-
