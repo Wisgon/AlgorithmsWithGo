@@ -5,6 +5,7 @@ import (
 )
 
 func SquareMatrixMultiply(matA [][]int, matB [][]int) [][]int {
+	// 两个方阵相乘
 	if !usefulFunc.MatrixesCanMultiply(matA, matB) {
 		panic("The two mateix can not multiply!")
 	}

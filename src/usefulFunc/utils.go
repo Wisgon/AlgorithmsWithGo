@@ -1,10 +1,18 @@
 package usefulFunc
 
 import (
+	"fmt"
 	"log"
 )
 
+func ShowSlice(sli []int) {
+	for _, v := range sli {
+		fmt.Println(v)
+	}
+}
+
 func MatrixesCanMultiply(A [][]int, B [][]int) bool {
+	// 判断两个矩阵是否可以相乘
 	if len(A[0]) == len(B) {
 		return true
 	} else {
@@ -13,6 +21,13 @@ func MatrixesCanMultiply(A [][]int, B [][]int) bool {
 }
 
 func DealWithError(how string, err error) {
+	/*
+	usage: 处理error的不同方式的封装
+	param:
+		how:如何来处理错误，可以使字符串"logln"，表示用log.Fatalln(err)
+		err:错误对象
+	return: 无
+	*/
 	if err != nil {
 		switch how {
 		case "logln":

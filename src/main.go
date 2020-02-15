@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	algorithmsTest.SortAlgTest()
+	algorithmsTest.MergeSortMultitwoTest()
 }
