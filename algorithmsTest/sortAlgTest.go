@@ -2,8 +2,8 @@
 package algorithmsTest
 
 import (
+	"AlgorithmsWithGo/sortAlgorithms"
 	"fmt"
-	"sortAlgorithms"
 	"sync"
 	"time"
 	"usefulFunc"

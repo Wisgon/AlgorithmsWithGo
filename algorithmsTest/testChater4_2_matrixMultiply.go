@@ -1,11 +1,11 @@
 package algorithmsTest
 
 import (
-	"chater4_2_matrixMultiply"
+	"AlgorithmsWithGo/chater4_2_matrixMultiply"
+	"AlgorithmsWithGo/usefulFunc"
 	"fmt"
 	"math"
 	"time"
-	"usefulFunc"
 )
 
 func MatrixMultiplyTest() {

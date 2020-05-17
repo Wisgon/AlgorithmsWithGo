@@ -67,6 +67,10 @@ func main() {
 	//var a = 5.8/2.0
 	//fmt.Println(int(a))
 
+	//左移右移
+	i := 3
+	fmt.Println(i << 1)
+
 }
 
 //func b(a [][]int){

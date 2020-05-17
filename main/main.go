@@ -1,7 +1,7 @@
 package main
 
 import (
-	"algorithmsTest"
+	"AlgorithmsWithGo/algorithmsTest"
 	//"usefulFunc";
 )
 
