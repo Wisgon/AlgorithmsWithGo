@@ -68,9 +68,31 @@ func main() {
 	//fmt.Println(int(a))
 
 	//左移右移
-	i := 3
-	fmt.Println(i << 1)
+	// i := 3
+	// fmt.Println(i << 1)
 
+	// 传入数组指针
+	// a := []int{2, 3, 4}
+	// arrPointer(&a)
+
+	// 交换两个值是否是交换了两个指针
+	// a := 2
+	// b := 3
+	// ap := &a
+	// bp := &b
+	// fmt.Printf("ap: %p, bp: %p\n", ap, bp)
+	// ap, bp = bp, ap
+	// fmt.Printf("ap: %p, bp: %p\n", ap, bp)
+	// fmt.Printf("a is: %d, b is: %d\n", a, b)
+	// fmt.Printf("ap point value: %d, bp point value %d", *ap, *bp)
+
+	// 指针切片取值
+	a := []int{2, 3, 4}
+	b := &a
+	*b = (*b)[:2]
+	fmt.Println(a, *b)
+	fmt.Printf("point a: %p, b value: %p\n", &a, b)
+	fmt.Printf("a[0]: %p, b[0]: %p\n", &(a[0]), &((*b)[0]))
 }
 
 //func b(a [][]int){
@@ -99,3 +121,7 @@ func main() {
 //func changeR(r *chan int) {
 //	*r = make(chan int, 10)
 //}
+
+// func arrPointer(arr *[]int) {
+// 	fmt.Println((*arr)[2])
+// }
