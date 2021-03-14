@@ -1,10 +1,10 @@
 package main
 
 import (
-	"AlgorithmsWithGo/algorithmsTest"
+	"AlgorithmsWithGo/algorithmsRun"
 	//"usefulFunc";
 )
 
 func main() {
-	algorithmsTest.MergeSortMultitwoTest()
+	algorithmsRun.MergeSortMultitwoTest()
 }

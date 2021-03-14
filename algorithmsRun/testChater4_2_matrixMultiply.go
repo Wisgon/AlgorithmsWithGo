@@ -1,4 +1,4 @@
-package algorithmsTest
+package algorithmsRun
 
 import (
 	"AlgorithmsWithGo/chater4_2_matrixMultiply"

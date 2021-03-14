@@ -1,4 +1,4 @@
-package sortAlgorithms
+package sortAlgorithmsOfChater2c4
 
 import "math"
 
