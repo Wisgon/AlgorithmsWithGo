@@ -87,12 +87,25 @@ func main() {
 	// fmt.Printf("ap point value: %d, bp point value %d", *ap, *bp)
 
 	// 指针切片取值
-	a := []int{2, 3, 4}
-	b := &a
-	*b = (*b)[:2]
-	fmt.Println(a, *b)
-	fmt.Printf("point a: %p, b value: %p\n", &a, b)
-	fmt.Printf("a[0]: %p, b[0]: %p\n", &(a[0]), &((*b)[0]))
+	// a := []int{2, 3, 4}
+	// b := &a
+	// *b = (*b)[:2]
+	// fmt.Println(a, *b)
+	// fmt.Printf("point a: %p, b value: %p\n", &a, b)
+	// fmt.Printf("a[0]: %p, b[0]: %p\n", &(a[0]), &((*b)[0]))
+
+	// 切片指向第一個元素
+	s := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(s)
+
+	s = s[:0]
+	fmt.Println(s)
+
+	s = s[1:4]
+	fmt.Println(s)
+
+	s = s[:2]
+	fmt.Println(s)
 }
 
 //func b(a [][]int){
