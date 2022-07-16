@@ -1,4 +1,4 @@
-package main
+package chater7
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 
 var wg sync.WaitGroup
 
-func main() {
+func RunFastSortCon() {
 	A := []int{3, 7, 4, 3, 9, 2, 1, 8}
 	workerNumb := 4
 	wg.Add(1)

@@ -1,8 +1,8 @@
-package main
+package chater7
 
 import "fmt"
 
-func main() {
+func RunFastSort() {
 	A := []int{3, 7, 4, 3, 9, 2, 1, 8}
 	QuickSort(A, 0, 7)
 	fmt.Println("A:", A)
