@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"AlgorithmsWithGo/usefulFunc"
+	"fmt"
+)
 
 func main() {
 	fmt.Println("CommonTest!")
@@ -95,17 +98,27 @@ func main() {
 	// fmt.Printf("a[0]: %p, b[0]: %p\n", &(a[0]), &((*b)[0]))
 
 	// 切片指向第一個元素
-	s := []int{1, 2, 3, 4, 5, 6}
-	fmt.Println(s)
+	// s := []int{1, 2, 3, 4, 5, 6}
+	// fmt.Println(s)
 
-	s = s[:0]
-	fmt.Println(s)
+	// s = s[:0]
+	// fmt.Println(s)
 
-	s = s[1:4]
-	fmt.Println(s)
+	// s = s[1:4]
+	// fmt.Println(s)
 
-	s = s[:2]
-	fmt.Println(s)
+	// s = s[:2]
+	// fmt.Println(s)
+
+	// 空切片訪問元素
+	// s := []int{}
+	// s[1199] = 3 // 會報錯，out of range
+	// fmt.Println(s)
+
+	// test max value
+	a := []float32{0.2, 1.4, 0.3}
+	maxi, maxv := usefulFunc.FindMaxElement(a)
+	fmt.Println(maxi, maxv)
 }
 
 //func b(a [][]int){

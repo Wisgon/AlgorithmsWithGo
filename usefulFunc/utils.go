@@ -22,11 +22,11 @@ func MatrixesCanMultiply(A [][]int, B [][]int) bool {
 
 func DealWithError(how string, err error) {
 	/*
-	usage: 处理error的不同方式的封装
-	param:
-		how:如何来处理错误，可以使字符串"logln"，表示用log.Fatalln(err)
-		err:错误对象
-	return: 无
+		usage: 处理error的不同方式的封装
+		param:
+			how:如何来处理错误，可以使字符串"logln"，表示用log.Fatalln(err)
+			err:错误对象
+		return: 无
 	*/
 	if err != nil {
 		switch how {
@@ -57,4 +57,18 @@ func CutMatrix(mat [][]*int, rowMin int, rowMax int, colMin int, colMax int) [][
 		}
 	}
 	return newMatrix
+}
+
+func FindMaxElement[T Number](targetArray []T) (maxIndex int, maxValue T) {
+	if len(targetArray) == 0 {
+		panic("empty array")
+	}
+	maxValue = targetArray[0]
+	for index, value := range targetArray {
+		if value > maxValue {
+			maxValue = value
+			maxIndex = index
+		}
+	}
+	return
 }

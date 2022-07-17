@@ -1,7 +1,8 @@
 package algorithmsRun
 
 import (
-	"AlgorithmsWithGo/sortAlgorithmsOfChater2c4"
+	"AlgorithmsWithGo/chater2_4"
+	"AlgorithmsWithGo/chater8"
 	"AlgorithmsWithGo/usefulFunc"
 	"fmt"
 	"sync"
@@ -15,7 +16,7 @@ func BaboSortTest() {
 	ts := time.Now()
 	copy(copyData, data)
 	ts = time.Now()
-	sortAlgorithmsOfChater2c4.BaboSort(copyData) //同一个机器十万个排序花了15秒
+	chater2_4.BaboSort(copyData) //同一个机器十万个排序花了15秒
 	fmt.Println("baboSort time is ", time.Since(ts))
 	usefulFunc.ShowSlice(copyData)
 }
@@ -25,7 +26,7 @@ func InsertionSortTest() {
 	ts := time.Now()
 	copy(copyData, data)
 	ts = time.Now()
-	sortAlgorithmsOfChater2c4.InsertionSort(copyData) //同一个机器十万个排序花了2.1秒
+	chater2_4.InsertionSort(copyData) //同一个机器十万个排序花了2.1秒
 	fmt.Println("time two is", time.Since(ts))
 	usefulFunc.ShowSlice(copyData)
 }
@@ -36,7 +37,7 @@ func MergeSortTest() {
 	copy(copyData, data)
 	ts = time.Now()
 	//单线程归并排序
-	sortAlgorithmsOfChater2c4.MergeSort(copyData, 0, len(copyData)-1) //同一个机器十万个排序花了四十毫秒
+	chater2_4.MergeSort(copyData, 0, len(copyData)-1) //同一个机器十万个排序花了四十毫秒
 	fmt.Println("time three is", time.Since(ts))
 	//usefulFunc.ShowSlice(copyData)
 }
@@ -48,7 +49,7 @@ func MergeSortMultiOneTest() {
 	//usefulFunc.ShowSlice(copyData)
 	ts = time.Now()
 	//这个是用通道实现的归并排序，估计通道通信消耗的时间太多，所以最慢
-	sortAlgorithmsOfChater2c4.MergeSortMultiOne(copyData, 8) //同一个机器十万个排序花了八十四毫秒
+	chater2_4.MergeSortMultiOne(copyData, 8) //同一个机器十万个排序花了八十四毫秒
 	fmt.Println("time four is", time.Since(ts))
 	usefulFunc.ShowSlice(copyData)
 }
@@ -62,8 +63,15 @@ func MergeSortMultitwoTest() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	//控制住多个线程的归并排序，chunkNum设置太多会发生内存爆炸
-	go sortAlgorithmsOfChater2c4.MergeSortMultitwo(copyData, 0, len(copyData)-1, &wg, 4) //同一个机器十万个排序花了十三毫秒
+	go chater2_4.MergeSortMultitwo(copyData, 0, len(copyData)-1, &wg, 4) //同一个机器十万个排序花了十三毫秒
 	wg.Wait()
 	fmt.Println("time five is", time.Since(ts))
 	//usefulFunc.ShowSlice(copyData)
+}
+
+func Chater8CountingSortRun() {
+	target := usefulFunc.CreateRandSlice(20, 10, false)
+	fmt.Printf("target:%+v\n", target)
+	result := chater8.CountingSort(target)
+	fmt.Printf("result:%+v\n", result)
 }

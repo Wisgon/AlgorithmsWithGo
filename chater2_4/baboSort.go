@@ -1,4 +1,4 @@
-package sortAlgorithmsOfChater2c4
+package chater2_4
 
 func BaboSort(sli []int) {
 	numOfSlice := len(sli)

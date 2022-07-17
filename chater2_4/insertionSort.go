@@ -1,4 +1,4 @@
-package sortAlgorithmsOfChater2c4
+package chater2_4
 
 func InsertionSort(sli []int) {
 	var j int

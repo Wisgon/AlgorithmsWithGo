@@ -1,11 +1,12 @@
 package main
 
 import (
-	"AlgorithmsWithGo/chater7"
+	"AlgorithmsWithGo/algorithmsRun"
 	//"usefulFunc";
 )
 
 func main() {
 	// algorithmsRun.MergeSortMultitwoTest()
-	chater7.RunFastSort()
+	// chater7.RunFastSort()
+	algorithmsRun.Chater8CountingSortRun()
 }
